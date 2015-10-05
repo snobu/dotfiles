@@ -1,0 +1,70 @@
+highlight ErrorMsg ctermfg=231 ctermbg=197 cterm=NONE guifg=#f8f8f0 guibg=#f92672 gui=NONE
+match ErrorMsg '\s\+$'
+
+if has('gui_running')
+    colorscheme molokai
+else
+    colorscheme molokai
+endif
+
+set textwidth=78
+set colorcolumn=+1
+
+set laststatus=2
+
+set tabstop=4 shiftwidth=4 expandtab
+
+" tell vim where to put its backup files
+set backupdir=c:\\tmp\
+" tell vim where to put swap files
+set directory=c:\\tmp\
+" undo files
+set undodir=c:\\tmp\
+
+set guifont=Consolas:h12
+
+if has("gui_running")
+  " GUI is running or is about to start.
+  " Maximize gvim window (for an alternative on Windows, see simalt below).
+  set lines=999 columns=999
+else
+  " This is console Vim.
+  if exists("+lines")
+    set lines=50
+  endif
+  if exists("+columns")
+    set columns=100
+  endif
+endif
+
+set nowrap
+set nocompatible
+source $VIMRUNTIME/vimrc_example.vim
+source $VIMRUNTIME/mswin.vim
+behave mswin
+
+set diffexpr=MyDiff()
+function MyDiff()
+  let opt = '-a --binary '
+  if &diffopt =~ 'icase' | let opt = opt . '-i ' | endif
+  if &diffopt =~ 'iwhite' | let opt = opt . '-b ' | endif
+  let arg1 = v:fname_in
+  if arg1 =~ ' ' | let arg1 = '"' . arg1 . '"' | endif
+  let arg2 = v:fname_new
+  if arg2 =~ ' ' | let arg2 = '"' . arg2 . '"' | endif
+  let arg3 = v:fname_out
+  if arg3 =~ ' ' | let arg3 = '"' . arg3 . '"' | endif
+  let eq = ''
+  if $VIMRUNTIME =~ ' '
+    if &sh =~ '\<cmd'
+      let cmd = '"' . $VIMRUNTIME . '\diff"'
+      let eq = '""'
+    else
+      let cmd = substitute($VIMRUNTIME, ' ', '" ', '') . '\diff"'
+    endif
+  else
+    let cmd = $VIMRUNTIME . '\diff'
+  endif
+  silent execute '!' . cmd . ' ' . opt . arg1 . ' ' . arg2 . ' > ' . arg3 . eq
+endfunction
+
