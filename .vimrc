@@ -102,8 +102,10 @@ let g:airline_symbols.readonly = ''
 let g:airline_symbols.linenr = ''
 
 "highlight column 79
-set textwidth=78
-set colorcolumn=+1
+set colorcolumn=79
+
+"This thing auto wraps and is annoying
+"set textwidth=78
 
 "set statusline=%<%f\ %h%m%r%=%-14.(%l,%c%V%)\ %P
 "let g:smartusline_string_to_highlight = '(%n) %f '
